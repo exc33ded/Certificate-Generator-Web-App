@@ -35,7 +35,7 @@ A web application to generate certificates with custom templates, fonts, and tex
 
 3. Navigate to the project directory:
    ```bash
-   cd certificate-generator-web-app
+   cd Certificate-Generator-Web-App
    ```
 
 4. Run the application:
