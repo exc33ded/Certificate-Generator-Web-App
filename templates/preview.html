@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate Preview</title>
+    <style>
+        .preview-container {
+            max-width: 90%;
+            margin: 20px auto;
+            text-align: center;
+        }
+        .preview-image {
+            max-width: 100%;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .controls {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 5px;
+        }
+        .button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background: #0056b3;
+        }
+        .button.download {
+            background: #28a745;
+        }
+        .button.back {
+            background: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="preview-container">
+        <h1>Certificate Preview</h1>
+        
+        <div class="controls">
+            <p>Click "Download" to save the certificate or "Generate More" to create certificates for other names.</p>
+            <button class="button download" onclick="downloadCertificate()">Download</button>
+            <button class="button" onclick="generateMore()">Generate More</button>
+            <button class="button back" onclick="goBack()">Back to Generator</button>
+        </div>
+
+        <div id="previewImage" class="preview-image">
+            <!-- Certificate preview will be displayed here -->
+        </div>
+    </div>
+
+    <script>
+        function downloadCertificate() {
+            const certificateUrl = document.getElementById('previewImage').querySelector('img').src;
+            const link = document.createElement('a');
+            link.href = certificateUrl;
+            link.download = 'certificate.png';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function generateMore() {
+            window.location.href = '/';
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+
+        // Load preview image when page loads
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const certificateId = urlParams.get('id');
+            if (certificateId) {
+                const previewDiv = document.getElementById('previewImage');
+                const img = document.createElement('img');
+                img.src = `/certificates/${certificateId}`;
+                img.alt = 'Certificate Preview';
+                previewDiv.appendChild(img);
+            }
+        }
+    </script>
+</body>
+</html>
